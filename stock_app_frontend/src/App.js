@@ -1,4 +1,6 @@
+import React from 'react'
 import './App.css';
+import axios from 'axios';
 import StockEventsTable from './components/StockEventsTable'
 
 const fetchedProducts = [
@@ -17,16 +19,43 @@ const fetchedStockEvents = [
   {id: 8, type: 'add', qty: 50, product: fetchedProducts[1]},
 ]
 
-function App() {
-  return (
-    <div className="App">
-      <h1>The Stock App</h1>
-      < StockEventsTable
-        products={fetchedProducts}
-        stockEvents={fetchedStockEvents}
-      />
-    </div>
-  );
+class App extends React.Component{
+  state = {
+    fetchedProducts,
+    fetchedStockEvents,
+  }
+
+  async componentDidMount() {
+    const producRes = await axios({
+      method: 'GET',
+      url: 'http://localhost:1337/products'
+    });
+
+    const stockEventRes = await axios({
+      method: 'GET',
+      url: 'http://localhost:1337/stockevents'
+    });
+
+    const fetchedProducts = producRes.data;
+    const fetchedStockEvents = stockEventRes.data;
+
+    this.setState({fetchedProducts, fetchedStockEvents })
+
+  }
+
+  render() {
+    const { fetchedProducts, fetchedStockEvents } = this.state;
+    return (
+      <div className="App">
+        <h1>The Stock App</h1>
+        < StockEventsTable
+          products={fetchedProducts}
+          stockEvents={fetchedStockEvents}
+        />
+      </div>
+    );
+
+  }
 }
 
 export default App;
