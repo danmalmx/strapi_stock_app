@@ -13,8 +13,8 @@ class StockDetail extends Component{
         <h2>Product: {name} | Total: {total}</h2>
         {show &&
         <div>
-          {stockEvents.map(event => (
-            <div className="StockEventsTable__card">
+          {stockEvents.map((event, i) => (
+            <div key={i} className="StockEventsTable__card">
               <p key={event.id}>Id: {event.id}</p>
               <p>Type: {event.type}</p>
               <p>Quantity: {event.qty}</p>
