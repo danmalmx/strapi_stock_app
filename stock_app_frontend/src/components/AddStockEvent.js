@@ -7,12 +7,11 @@ class AddStockEvent extends Component {
     qty: 0,
     type: 'add',
     product: 'no',
+    show: false,
   };
 
   handleChange = (event) => {
     event.preventDefault();
-    console.log('AddStockEvent.handleChange event.target.name', event.target.name);
-    console.log('AddStockEvent.handleChange event.target.value', event.target.value);
     this.setState({[event.target.name]: event.target.value});
   }
 
@@ -45,29 +44,31 @@ class AddStockEvent extends Component {
 
   render(){
 
-    const { qty, type, product } = this.state;
+    const { qty, type, product, show } = this.state;
 
     const { products } = this.props;
 
     return (
       <div className="AddStockEvent">
-        Add Stock Event
-        <form onSubmit={this.handleSubmit}>
-          <select onChange={this.handleChange} name="product" value={product}>
-            <option value="no">Please select a product</option>
-            {products.map((product, i) =>
-              <option key={i} value={product.id}>
-                {product.name}
-              </option>
-            )}
-          </select>
-          <input onChange={this.handleChange} type="number" name="qty" value={qty}/>
-          <select onChange={this.handleChange} name="type" value={type}>
-            <option value="add">Add</option>
-            <option value="remove">Remove</option>
-          </select>
-          <button type="submit">Submit</button>
-        </form>
+        <h1>Add Stock Event <button onClick={() => this.setState({show: !show})}>{show === false ? 'Show' : 'Hide'}</button></h1>
+        {show &&
+          <form onSubmit={this.handleSubmit}>
+            <select onChange={this.handleChange} name="product" value={product}>
+              <option value="no">Please select a product</option>
+              {products.map((product, i) =>
+                <option key={i} value={product.id}>
+                  {product.name}
+                </option>
+              )}
+            </select>
+            <input onChange={this.handleChange} type="number" name="qty" value={qty}/>
+            <select onChange={this.handleChange} name="type" value={type}>
+              <option value="add">Add</option>
+              <option value="remove">Remove</option>
+            </select>
+            <button type="submit">Submit</button>
+          </form>
+        }
       </div>
     )
   }

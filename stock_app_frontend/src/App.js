@@ -1,9 +1,9 @@
 import React from 'react'
-import './App.css';
-import axios from 'axios';
+import './App.css'
+import axios from 'axios'
 import StockEventsTable from './components/StockEventsTable'
 import AddStockEvent from './components/AddStockEvent'
-
+import AddProduct from  './components/AddProduct'
 class App extends React.Component{
   state = {
     fetchedProducts: [],
@@ -33,11 +33,9 @@ class App extends React.Component{
     return (
       <div className="App">
         <h1>The Stock App</h1>
+        <AddProduct />
         <AddStockEvent products={fetchedProducts} />
-        < StockEventsTable
-          products={fetchedProducts}
-          stockEvents={fetchedStockEvents}
-        />
+        <StockEventsTable products={fetchedProducts} stockEvents={fetchedStockEvents} />
       </div>
     );
 
