@@ -18,3 +18,20 @@
 .StockDetail {
   cursor: pointer;
 }
+
+.AddProduct {
+  padding-top: 12px;
+}
+
+.Nav__link {
+  padding: 12px;
+  text-decoration: none;
+}
+
+.Nav__link.active {
+  text-decoration: underline;
+}
+
+.Nav__link:first-of-type {
+  padding-left: 0;
+}

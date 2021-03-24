@@ -1,9 +1,12 @@
 import React from 'react'
 import './App.css'
 import axios from 'axios'
+import { BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import StockEventsTable from './components/StockEventsTable'
 import AddStockEvent from './components/AddStockEvent'
 import AddProduct from  './components/AddProduct'
+import Nav from  './components/Nav'
+
 class App extends React.Component{
   state = {
     fetchedProducts: [],
@@ -11,7 +14,7 @@ class App extends React.Component{
   }
 
   async componentDidMount() {
-    const producRes = await axios({
+    const productRes = await axios({
       method: 'GET',
       url: 'http://localhost:1337/products'
     });
@@ -21,7 +24,7 @@ class App extends React.Component{
       url: 'http://localhost:1337/stockevents'
     });
 
-    const fetchedProducts = producRes.data;
+    const fetchedProducts = productRes.data;
     const fetchedStockEvents = stockEventRes.data;
 
     this.setState({fetchedProducts, fetchedStockEvents })
@@ -32,10 +35,20 @@ class App extends React.Component{
     const { fetchedProducts, fetchedStockEvents } = this.state;
     return (
       <div className="App">
-        <h1>The Stock App</h1>
-        <AddProduct />
-        <AddStockEvent products={fetchedProducts} />
-        <StockEventsTable products={fetchedProducts} stockEvents={fetchedStockEvents} />
+        <Router>
+        <Nav />
+          <Switch>
+            <Route exact path="/products">
+              <AddProduct />
+            </Route>
+            <Route exact path="/stock/add">
+              <AddStockEvent products={fetchedProducts} />
+            </Route>
+            <Route exact path="/stock">
+            <StockEventsTable products={fetchedProducts} stockEvents={fetchedStockEvents} />
+            </Route>
+          </Switch>
+        </Router>
       </div>
     );
 
