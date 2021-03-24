@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-
 class AddProduct extends Component {
 
   state = {
@@ -8,7 +7,7 @@ class AddProduct extends Component {
   }
 
   handleSubmit = async (event) => {
-    event.preventDefult();
+    event.preventDefault();
 
     const { name } = this.state;
 
@@ -22,10 +21,10 @@ class AddProduct extends Component {
 
     console.log('createProductRes', createProductRes);
 
-    // if (createProductRes.status === 200) {
-    //   alert('Product successfully added');
-    //   window.location = window.location;
-    // }
+    if (createProductRes.status === 200) {
+      alert('Product successfully added');
+      window.location = window.location;
+    }
   };
 
   render() {
